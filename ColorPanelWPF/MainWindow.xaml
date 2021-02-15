@@ -1,0 +1,85 @@
+﻿<Window x:Class="ColorPanelWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ColorPanelWPF"
+        mc:Ignorable="d"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
+        Title="Color Panel" FontFamily="Montserrat" Background="{x:Null}" AllowsTransparency="True" Icon="ColorPanel.ico"
+        Height="316.101" Width="566.407" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        Topmost="{Binding IsChecked, ElementName=Topmost}" MouseDown="Window_MouseDown">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="39*"/>
+            <RowDefinition Height="277*"/>
+        </Grid.RowDefinitions>
+
+        <Border Background="#FF252525" CornerRadius="10" Grid.RowSpan="2"/>
+
+        <Image Margin="5,5,0,5" Source="ColorPanel.ico" Height="29" VerticalAlignment="Top" Width="29" HorizontalAlignment="Left"/>
+
+        <Border BorderBrush="Black" BorderThickness="0 0 0 1" Grid.RowSpan="2" VerticalAlignment="Top" Height="40">
+            <TextBlock Text="Color Panel" VerticalAlignment="Center" Margin="45 0 0 0" Foreground="White" FontSize="16"/>
+        </Border>
+
+        <Button Content="Exit" Margin="0,5,5,0" Width="100" HorizontalAlignment="Right" VerticalAlignment="Top" Background="#FF563380" BorderBrush="#FF4E2480" Foreground="White" FontSize="16" Click="BExit_Click"/>
+
+        <Button Content="_" Margin="0,5,110,0" Width="30" HorizontalAlignment="Right" VerticalAlignment="Top" Background="#FF483380" BorderBrush="#FF3D2480" Foreground="White" FontSize="16" Click="BMinimize_Click"/>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left">
+
+            <Border Background="Black" Width="257" Height="257" Margin="10 10 0 10" CornerRadius="10" Grid.RowSpan="2">
+                <Grid>
+                    <StackPanel Height="255" Width="255" Orientation="Horizontal" Margin="1">
+                        <Border x:Name="colorBorderLeft" Background="Black" Height="255" CornerRadius="10" Width="128"/>
+                        <Border x:Name="colorBorderRight" Background="Black" Height="255" CornerRadius="10" Width="127"/>
+                    </StackPanel>
+                    <Border Height="255" Width="10" Background="{Binding Background, ElementName=colorBorderLeft}" Margin="119,1,128,1"/>
+                    <Border Height="255" Width="10" Background="{Binding Background, ElementName=colorBorderRight}" Margin="129,1,118,1"/>
+                </Grid>
+            </Border>
+
+            <StackPanel VerticalAlignment="Center" Margin="10,0">
+
+                <StackPanel Orientation="Horizontal" Margin="10,0,0,5">
+                    <Button x:Name="bSwitch" IsEnabled="False" Width="36" HorizontalAlignment="Right" VerticalAlignment="Top" BorderBrush="#FF282828" Foreground="White" FontSize="16" Click="bSwitch_Click" Background="#FF323232">
+                        <Grid>
+                            <Image x:Name="bSwitchImage1" Source="Resources/switchRight.png" Stretch="Fill" Width="16" Height="16" />
+                            <Image x:Name="bSwitchImage2" Source="Resources/switchLeft.png" Stretch="Fill" Width="16" Height="16" Visibility="Hidden" />
+                        </Grid>
+                    </Button>
+                    <CheckBox x:Name="cbCompareColors" FontSize="16" Content="Compare Colors" Foreground="White" BorderBrush="Black" Background="#FF252525" Margin="14,0,0,0" Click="cbCompareColors_Click"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                    <Label Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16" Content="HEX:" Foreground="White" VerticalAlignment="Bottom"/>
+                    <StackPanel VerticalAlignment="Bottom">
+                        <CheckBox x:Name="Topmost" Margin="0,0,0,15" FontSize="16" Content="Topmost" Foreground="White" BorderBrush="Black" Background="#FF252525"/>
+                        <TextBox x:Name="textBoxHEX" VerticalAlignment="Bottom" Text="#FF000000" FontSize="16" MaxLength="9" Background="{x:Null}" BorderBrush="Black" SelectionBrush="#FF0074FF" SelectionTextBrush="{x:Null}" Foreground="White" CaretBrush="#FF0074FF" Height="33" Width="100" TextChanged="TBHEX_TextChanged"/>
+                    </StackPanel>
+                    <StackPanel Margin="10,0,0,0">
+                        <Button FontSize="16" Content="Copy to RGB" Background="#FF323232" Foreground="White" BorderBrush="#FF282828" Click="BCopyRGB_Click" Margin="0,0,0,10"/>
+                        <Button FontSize="16" Content="Copy to HEX" Background="#FF323232" Foreground="White" BorderBrush="#FF282828" Click="BCopyHEX_Click"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="R:" FontSize="16" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Width="36"/>
+                    <hc:PreviewSlider x:Name="sliderR" Value="0" Maximum="255" Width="200" Background="#FF646464" ValueChanged="SR_ValueChanged"/>
+                    <TextBox x:Name="textBoxR" Text="0" FontSize="16" Width="45" MaxLength="3" Background="{x:Null}" BorderBrush="Black" SelectionBrush="#FF0074FF" SelectionTextBrush="{x:Null}" Foreground="White" CaretBrush="#FF0074FF" TextChanged="TBR_TextChanged"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+                    <Label Content="G:" FontSize="16" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Width="36"/>
+                    <hc:PreviewSlider x:Name="sliderG" Value="0" Maximum="255" Width="200" Background="#FF646464" ValueChanged="SR_ValueChanged"/>
+                    <TextBox x:Name="textBoxG" Text="0" FontSize="16" Width="45" MaxLength="3" Background="{x:Null}" BorderBrush="Black" SelectionBrush="#FF0074FF" SelectionTextBrush="{x:Null}" Foreground="White" CaretBrush="#FF0074FF" TextChanged="TBR_TextChanged"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+                    <Label Content="B:" FontSize="16" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Width="36"/>
+                    <hc:PreviewSlider x:Name="sliderB" Value="0" Maximum="255" Width="200" Background="#FF646464" ValueChanged="SR_ValueChanged"/>
+                    <TextBox x:Name="textBoxB" Text="0" FontSize="16" Width="45" MaxLength="3" Background="{x:Null}" BorderBrush="Black" SelectionBrush="#FF0074FF" SelectionTextBrush="{x:Null}" Foreground="White" CaretBrush="#FF0074FF" TextChanged="TBR_TextChanged"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
